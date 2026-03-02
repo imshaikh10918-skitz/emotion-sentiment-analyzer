@@ -1,1 +1,39 @@
-import streamlit as st\n\n# Function for sentiment analysis\ndef analyze_sentiment(text):\n    # This is where you would implement your sentiment analysis algorithm\n    # For simplicity, let's say it returns 'Positive' if it contains 'good' and 'Negative' otherwise\n    return 'Positive' if 'good' in text else 'Negative'\n\n# Streamlit application\nst.title('Sentiment Analysis App')\n\nst.write("Enter some text to analyze: ")\ntext_input = st.text_area('Input')\n\nif st.button('Analyze'):\n    if text_input:\n        result = analyze_sentiment(text_input)\n        st.success(f'The sentiment is: {result}')\n    else:\n        st.error('Please enter some text to analyze.')\n
+import streamlit as st
+import pandas as pd
+import numpy as np
+
+# Custom styling
+st.set_page_config(page_title="Emotion Sentiment Analyzer", layout='wide')
+
+# Sidebar information
+st.sidebar.title("Settings")
+text_input = st.sidebar.text_area("Enter text for analysis")
+
+# Preprocessing functions
+def preprocess_text(text):
+    # Add text preprocessing logic here (e.g., lowercase, remove punctuation, etc.)
+    return text.lower()
+
+# Emotion analysis function (Dummy function for example)
+def analyze_emotion(text):
+    # This is a placeholder for emotion analysis logic
+    emotions = ['happy', 'sad', 'angry']  # Sample emotions
+    confidence_scores = np.random.rand(len(emotions)).tolist()  # Random confidence scores
+    return dict(zip(emotions, confidence_scores))
+
+# Main app
+st.title("Emotion Sentiment Analyzer")
+st.write("Analyze the emotion of your text!")
+
+if text_input:
+    cleaned_text = preprocess_text(text_input)
+    st.write("Cleaned Text:", cleaned_text)
+    
+    # Analyze emotions
+    emotion_results = analyze_emotion(cleaned_text)
+    st.write("Emotion Analysis:")
+    for emotion, score in emotion_results.items():
+        st.write(f"{emotion.capitalize()}: {score:.2f}")
+
+# Footer
+st.markdown("<footer style='text-align: center;'>Created with ❤️ by imshaikh10918-skitz</footer>", unsafe_allow_html=True)
